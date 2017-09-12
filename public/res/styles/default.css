@@ -1,0 +1,82 @@
+
+.TileContainer{
+    float: left;
+    border-radius: 5px;
+    //padding-left : 10px;
+    background: #fff;
+
+}
+
+.imgContainer {
+    width: 30%;
+
+     float: left;
+}
+
+.imgContainer span {
+    margin-top: 10px;
+
+}
+
+.copyContainer {
+    width: 67%;
+     float: left;
+    // color: #ddd;
+    padding: 10px 0px 5px 66px;
+
+}
+.products{
+
+  border :1px;
+
+}
+.panel {
+    //margin-right: 42px!important;
+    display: block;
+}
+
+.price {
+    font-size: 20px;
+    color: red;
+}
+
+.buttonContainer {
+    float:left;
+    width: 100%;
+    padding:5px;
+    background-color :#ddd;
+    border:10px;
+}
+.img-thumbnail {
+    margin-top: 23px;
+    margin-left: 15px;
+
+}
+.container{
+margin-left :10px;
+
+}
+
+.filterSection > h2{
+
+  text-align: center;
+  text-color:red;
+
+}
+.productForm > button{
+
+text-align: center
+}
+
+ .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+ padding-left:0px;
+ padding-right:0px;
+ }
+ .tableTable{
+
+ padding-left:10px;
+  padding-right:10px;
+ }
+ .productTablePanel{
+ margin-left:20px;
+ }
