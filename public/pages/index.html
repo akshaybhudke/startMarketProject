@@ -21,10 +21,6 @@
     <link href="../res/styles/custom.min.css" rel="stylesheet">
     <link href="../res/styles/default.css" rel="stylesheet">
 
-    <script>
-
-
-    </script>
 
 
 </head>
@@ -188,33 +184,30 @@
                             </div>
 
                             <div id="productTablePanel" class="col-md-3 col-sm-3 col-xs-3  panel panel-default">
-                                <div class="tableTable">
                                 <strong> Add Product </strong>
                                 <hr>
-                                <form class="productForm ">
+                                <form action="" class="productForm" id="productForm">
                                     <div class="form-group">
                                         <label for="productName">Name * </label>
-                                        <input type="productName" class="form-control" id="productName">
+                                        <input type="productName" class="form-control" id="productName" name="productName">
                                     </div>
                                     <div class="form-group">
                                         <label for="productCategory">Category*</label>
-                                        <input type="password" class="form-control" id="productCategory">
+                                        <input type="password" class="form-control" id="productCategory" name="productCategory">
                                     </div>
                                     <div class="form-group">
                                         <label for="productPrice">Price *</label>
-                                        <input type="password" class="form-control" id="productPrice">
+                                        <input type="password" class="form-control" id="productPrice" name="productPrice" >
                                     </div>
                                     <div class="form-group">
                                         <label for="productDescription">Description *</label>
-                                        <input type="password" class="form-control" id="productDescription">
+                                        <input type="password" class="form-control" id="productDescription" name="productDescription" >
                                     </div>
-
                                     <hr>
-
-                                    <button type="cancel" class="btn btn-danger btn-sm">Cancel</button>
-                                    <button type="submit" class="btn btn-success btn-sm">Submit</button>
+                                    <button type="cancel" class="btn btn-danger btn-sm" id="cancel">Cancel</button>
+                                    <button type="submit" class="btn btn-success btn-sm" id="addProduct">Add</button>
                                 </form>
-                                </div>
+
 
                             </div>
 

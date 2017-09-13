@@ -11,22 +11,20 @@
 
 /*Global Variables Section*/
 
-
 //Declare your Global Variables inside this block
-
-
-
 
 /*End of Global Variables*/
 
+
 // A $(document).ready() block.
 $(document).ready(function() {
-    
+
     //Write any code you want executed in a $(document).ready() block here
- getProducts();
+ //getProducts();
+ getRemove(id);
 
 
-});
+  });
 
 //Get List of Products from the database
 function getProducts() {
@@ -41,11 +39,6 @@ function getProducts() {
             iterateThroughProducts(response)
         }*/
     });
-
-
-//productInfo
-
-
 
     /***
     Write your code for fetching the list of product from the database
@@ -80,25 +73,17 @@ function getProducts() {
 
 function callback(response){
 var productObj=response.data;
-//var product =null;
 var newHTML ;
 $(productObj).each(function (i,val){
-      /*  var _id =null;
-        var price=null;
-        var description=null;
-        var category=null;
-        var name=null;
-        var productImg =new Array();
-      */  console.log(val.category);
+
 
         var category="";
+        var id=val._id;
         category += "<div class=\"btn  btn-success btn-sm \" >"+val.category+"<\/div>";
-
-
 
         var strVar="";
         strVar += " <div class=\" col-md-12 col-sm-12 col-xs-12 panel panel-default\">";
-        strVar += "                                   <div class=\" TileContainer\">";
+        strVar += "                                   <div class=\" TileContainer\" id="+id+">";
         strVar += "                                    <div class=\"imgContainer\">";
         strVar += "                                        <img class=\"img-rounded  img-thumbnail img-responsive\" alt=\"Responsive image\"  src=\"images\/product.png\">";
         strVar += "                                        <a href=\"#\" class=\" pull-right\"><span class=\"glyphicon glyphicon-upload\"><\/span> Upload <\/a>";
@@ -110,105 +95,51 @@ $(productObj).each(function (i,val){
         strVar += "                                       <span class=\"price\">Rs."+val.price+"<\/span>";
         strVar += "                                    <\/div>";
         strVar += "                                   <\/div>";
-        strVar += "                                   <div class=\"  buttonContainer\"> <a href=\"#\" class=\"btn  btn-success btn-sm pull-right\">";
+        strVar += "                                   <div class=\"buttonContainer\"> <button class=\"btn  btn-success btn-sm pull-right\">";
         strVar += "                                       <span class=\"glyphicon glyphicon-edit\"><\/span> Edit";
-        strVar += "                                   <\/a>";
-        strVar += "                                       <a href=\"#\" class=\"btn btn-danger btn-sm pull-right\">";
+        strVar += "                                   <\/button>";
+        strVar += "                                       <button id=\"removeProduct"+id+ "\" onclick=\"getRemove('"+id+"')\" class=\"btn btn-danger btn-sm pull-right \" >";
         strVar += "                                           <span class=\"glyphicon glyphicon-trash\"><\/span> Remove";
-        strVar += "                                       <\/a><\/div>";
+        strVar += "                                       <\/button><\/div>";
         strVar += "                               <\/div>";
-        console.log(strVar)
+
         $(".products").append(strVar).html()
         $(".category").append(category).html()
-        /*$("#product").append('<div class="row" id="productInfoWithImage " >
-                                                                      <div class="col-md-3" id="productImage">
-                                                                              <img class="img-thumbnail" src="images/product.png">
-                                                                          <a href="#" class=" pull-right">
-                                                                              <span class="glyphicon glyphicon-upload"></span> Upload
-                                                                          </a>
-                                                                      </div>
-                                                                      <div class="col-md-6" id="productInfo">
-                                                                          <div class="product pull-right">
-                                                                              <div class="product-block">
-                                                                                  <h1 class="productName">$productName</h1>
-                                                                                  <h4 class="productDescription">$productDescription </h4>
-                                                                                  <h6 class="productCategory mb-2 text-muted">$productCategory</h6>
-                                                                                  <p class="price"><b><i>$price</i></b></p>
-                                                                              </div>
-                                                                          </div>
-                                                                      </div>
-                                                              </div>')*/
-
-
-
-
-//        $(".productInfo").append("<div class="product-block"><span><h2 class="+product.name+"></h2></span><span><h5 class="productDescription" data-toggle="collapse"> </h5></span><span> <h6 class="productCategory mb-2 text-muted"></span></h6><p class="price"><b><i><span></span></i></b></p></div>")
-    //    $("#productList").append('<h2>'+val.category+'</h2>');
-
-//        $.each(val,function(key,val){
-//        if(key=="_id"){
-//         _id=val;
-//         }
-//        if(key=="price"){
-//         price =val;
-//         }
-//        if(key=="description"){
-//         description =val;
-//         }
-//        if(key=="category"){
-//         category =val;
-//         }
-//        if(key=="name"){
-//         name =val;
-//         }
-//        if(key=="productImg"){
-//        productImg=val;
-//        }
-//        var  product =new Object();
-//
-//                                    product._id =_id;
-//                                    product.price =price;
-//                                    product.description=description;
-//                                    product.category=category;
-//                                    product.name=name;
-//                                    product.productImg=productImg;
-
-
-// newHTML = '<p>"'+name+'</p>'+'<br>';
-//
-//
-//
-//});
-
 
 });
-
 }
-
-
-
-function iterateThroughProducts(response){
-
-
-    var data=response.data;
-
-$(data).each(function(i,val)
- {
-    $.each(val,function(key,val)
-  {
-          console.log(key + " : " + val);
-  });
-});
-}
-
 
 
 //Initial call to populate the Products list the first time the page loads
-//getProducts();
+getProducts();
+
+function getRemove(id){
+
+ $.ajax({
+            url: "http://localhost:3000/product/"+id ,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            type: "DELETE",
+            success: function (response) {
+            productRemovalSuccess(response)
+        }
+    });
+
+    alert("Product deleted successfully");
+}
+
+function productRemovalSuccess(){
+alert("product removed");
+}
+
+$( "#addProduct" ).click(function() {
+  alert( "Handler for .click() called." );
+});
+
+
 
 
 /*
- 
  Write a generic click even capture code block 
  to capture the click events of all the buttons in the HTML page
 
@@ -226,6 +157,14 @@ $(data).each(function(i,val)
 
  If the button is add
  -----------------------
+ // Wait for the DOM to be ready
+ */
+
+
+
+
+ /*
+
  Using jQuery Validate the form
  All fields are mandatory.
  Call the API
