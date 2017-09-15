@@ -13,16 +13,20 @@
 
 //Declare your Global Variables inside this block
 
+var availableProductSize;
+var generateNextId;
+var productObj =new Object();
+
+
+
 /*End of Global Variables*/
 
 
 // A $(document).ready() block.
 $(document).ready(function() {
-
     //Write any code you want executed in a $(document).ready() block here
- //getProducts();
- getRemove(id);
-
+    $( "#message" ).hide();
+ getProducts();
 
   });
 
@@ -73,14 +77,13 @@ function getProducts() {
 
 function callback(response){
 var productObj=response.data;
-var newHTML ;
+$(".products").html("");
+availableProductSize=productObj.length;
 $(productObj).each(function (i,val){
-
 
         var category="";
         var id=val._id;
         category += "<div class=\"btn  btn-success btn-sm \" >"+val.category+"<\/div>";
-
         var strVar="";
         strVar += " <div class=\" col-md-12 col-sm-12 col-xs-12 panel panel-default\">";
         strVar += "                                   <div class=\" TileContainer\" id="+id+">";
@@ -95,49 +98,70 @@ $(productObj).each(function (i,val){
         strVar += "                                       <span class=\"price\">Rs."+val.price+"<\/span>";
         strVar += "                                    <\/div>";
         strVar += "                                   <\/div>";
-        strVar += "                                   <div class=\"buttonContainer\"> <button class=\"btn  btn-success btn-sm pull-right\">";
+        strVar += "                                   <div class=\"buttonContainer\"> <button onclick=\"editProduct('"+id+"')\" class=\"btn  btn-success btn-sm pull-right\">";
         strVar += "                                       <span class=\"glyphicon glyphicon-edit\"><\/span> Edit";
         strVar += "                                   <\/button>";
-        strVar += "                                       <button id=\"removeProduct"+id+ "\" onclick=\"getRemove('"+id+"')\" class=\"btn btn-danger btn-sm pull-right \" >";
+        strVar += "                                       <button id=\"removeProduct"+id+ "\" onclick=\"removeProduct('"+id+"')\" class=\"btn btn-danger btn-sm pull-right \" >";
         strVar += "                                           <span class=\"glyphicon glyphicon-trash\"><\/span> Remove";
         strVar += "                                       <\/button><\/div>";
         strVar += "                               <\/div>";
 
         $(".products").append(strVar).html()
         $(".category").append(category).html()
+        generateNextId=id;
 
 });
+generateNextId+=1;
 }
-
 
 //Initial call to populate the Products list the first time the page loads
-getProducts();
+//getProducts();
 
-function getRemove(id){
-
- $.ajax({
-            url: "http://localhost:3000/product/"+id ,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            type: "DELETE",
-            success: function (response) {
-            productRemovalSuccess(response)
-        }
-    });
-
-    alert("Product deleted successfully");
-}
-
-function productRemovalSuccess(){
-alert("product removed");
-}
+/*
 
 $( "#addProduct" ).click(function() {
   alert( "Handler for .click() called." );
 });
 
+*/
 
 
+/*
+$('body').click(function(){
+  console.log('clicked');
+});
+
+$( document.body ).click(function() {
+    alert('Hi I am bound to the body!');
+});
+*/
+
+
+$('html').click(function(e){
+
+  if(!$(e.target).attr("id") == "addProduct") {
+            alert(generateNextId);
+  }
+
+});
+
+/*
+
+$('#submit').click(function(){
+    if( $('#productName').val() == ''){
+        alert('empty');
+    }
+});
+*/
+
+$('form').submit(function(e){
+        if(this.productName.value == '' || this.productCategory.value == '' || this.productCategory.value == ''|| this.productCategory.value == ''){
+            $('#updateOrAddMessage').append("fill all details");
+        }else {
+            return true;
+        }
+        return false;
+});
 
 /*
  Write a generic click even capture code block 
@@ -154,15 +178,10 @@ $( "#addProduct" ).click(function() {
 
  Show the success/failure message in a message div with the corresponding color green/red
 
-
  If the button is add
  -----------------------
  // Wait for the DOM to be ready
  */
-
-
-
-
  /*
 
  Using jQuery Validate the form
@@ -186,7 +205,6 @@ $( "#addProduct" ).click(function() {
  ---------------------
  Change the Form to Edit Mode
  Populate the details of the product in the form
- 
  
  If the button is Update
  -----------------------
@@ -217,24 +235,102 @@ $( "#addProduct" ).click(function() {
 
 /*Remove Product*/
 function removeProduct(id) {
-
 //write your code here to remove the product and call when remove button clicked
+ var txt;
+ if (confirm("Are you sure you want to remove this product ?") == true) {
+$.ajax({
+            url: "http://localhost:3000/product/"+id ,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            type: "DELETE",
+            success: productRemovalSuccess
+    }); //window.location.reload();
 
+        function productRemovalSuccess(){
+        getProducts();
+        $( "#message" ).show();
+        $('#message').append("Removed Successfully");
+        }
+    }
 }
 
 /*Update Product*/
 function editProduct(id) {
-
-    //write your code here to update the product and call when update button clicked
+   $.ajax({
+            url: "http://localhost:3000/product/"+id ,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data:id,
+            type: "GET",
+            success: editProductResponse
+            /*
+            success: function (response) {
+            iterateThroughProducts(response)
+        }*/
+    });
 
 }
+
+function editProductResponse(response){
+ productObj=response.data;
+//write your code here to update the product and call when update button clicked
+
+document.getElementById("productName").value = productObj.name;
+document.getElementById("productCategory").value = productObj.category;
+document.getElementById("productPrice").value = productObj.price;
+document.getElementById("productDescription").value = productObj.description;
+document.getElementById("addProduct").value = "Update";
+}
+
+function createOrUpdateProduct(){
+    var button=document.getElementById("addProduct");
+      alert(button.value)
+        if(button.value == "Add"){
+            createProduct(generateNextId);
+        }
+        else if (button.value == "Update"){
+            updateProduct1();
+        }
+}
+
 
 function createProduct(id) {
-
     //write your code here to create  the product and call when add button clicked
+alert(generateNextId);
 
 }
 
+function updateProduct1(){
+
+id=productObj._id;
+var name=document.getElementById("productName").value;
+var category=document.getElementById("productCategory");
+var price=document.getElementById("productPrice").value;
+var description=document.getElementById("productDescription");
+console.log()
+alert("i am in updateProduct");
+  $.ajax ({
+         url: "http://localhost:3000/product/"+id ,
+         contentType: "application/json; charset=utf-8",
+         dataType: "json",
+         type: "PUT",
+         data: {
+                 "name":name,
+                 "category":category,
+                 "description":description,
+                 "price":price
+         },
+         success: editProductSuccess
+  });
+
+}
+
+function editProductSuccess() {
+
+        getProducts();
+        $( "#message" ).show();
+        $('#message').append("Updated Successfully");
+ }
 
 /* 
     //Code Block for Drag and Drop Filter

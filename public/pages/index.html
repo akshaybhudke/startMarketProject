@@ -88,7 +88,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="right_col row" role="main">
 
             <!-- Search Box-->
             <div class="input-group">
@@ -103,7 +103,7 @@
 
             <!-- Category Filter Section -->
             <!--Write your html contents here to Drop Categories-->
-            <div class=" col-md-12  filterSection panel panel-default ">
+            <div class=" col-md-12 col-sm-12 col-xs-12  filterSection panel panel-default ">
                 <span class="glyphicon glyphicon-filter"> <h2 align="left"> Category Filter </h2>
                 <h2 align="right" >Drag and Drop some categories into this card to filter products</h2></span>
 
@@ -114,8 +114,8 @@
             <!--Show All Categories -->
 
             <!--Write your html contents here to Drop Categories-->
-            <div class="categories panel panel-default col-md-12">
-                <div class="category"><Strong>All Categories</Strong>
+            <div class="categories panel panel-default col-md-12 col-sm-12 col-xs-12">
+                <div class="category col-md-12 col-sm-12 col-xs-12"><Strong>All Categories</Strong>
                     <br>
                 </div>
             </div>
@@ -129,12 +129,12 @@
             <!-- Creating table for listing product info -->
 
             <!--Shows All Product -->
-            <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="dashboard_graph">
 
                         <div class="row x_title">
-                            <div class="col-md-6">
+                            <div class=" listHeading col-md-12 col-sm-12 col-xs-12 ">
                                 <h3>Product List
                                     <small></small>
                                 </h3>
@@ -142,7 +142,9 @@
                         </div>
 
                         <div class="container rounded">
-
+                            <div id="message" class=" message row panel panel-default">
+                                <span class="printMessage"> </span>
+                            </div>
                             <!--
                                  Write your html code here to display the products
                                  Create only the containers and fill them using jquery
@@ -162,50 +164,35 @@
                             -->
                             <!--Custome code Start -->
                             <div class="products col-md-8 col-sm-8 col-xs-8  panel panel-default ">
-                                <!-- <div class=" col-md-8 panel panel-default">
-                                     <div class=" row TileContainer">
-                                      <div class="imgContainer">
-                                          <img class="media-object img-thumbnail img-responsive" alt="Responsive image" src="images/product.png">
-                                          <a href="#" class=" pull-right"><span class="glyphicon glyphicon-upload"></span> Upload </a>
-                                      </div>
-                                      <div class="  copyContainer">
-                                          <h2>Moto G 4</h2>
-                                          <p>fdfdfsdfdsgsdgsfgfgdfgdfgdfgfgfgsdf</p>
-                                          <span class="price">200.00</span>
-                                      </div>
-                                     </div>
-                                     <div class="  buttonContainer"> <a href="#" class="btn  btn-success btn-md pull-right">
-                                         <span class="glyphicon glyphicon-edit"></span> Edit
-                                     </a>
-                                         <a href="#" class="btn btn-danger btn-md pull-right">
-                                             <span class="glyphicon glyphicon-trash"></span> Remove
-                                         </a></div>
-                                 </div>-->
+
                             </div>
 
                             <div id="productTablePanel" class="col-md-3 col-sm-3 col-xs-3  panel panel-default">
                                 <strong> Add Product </strong>
                                 <hr>
-                                <form action="" class="productForm" id="productForm">
+                                <div id="updateOrAddMessage" class=" message row panel panel-default">
+                                    <span class="printMessage"> </span>
+                                </div>
+                                <form  class="productForm" id="productForm" name="productForm">
                                     <div class="form-group">
                                         <label for="productName">Name * </label>
-                                        <input type="productName" class="form-control" id="productName" name="productName">
+                                            <input type="text" class="form-control" id="productName" name="productName" placeholder="">
                                     </div>
                                     <div class="form-group">
                                         <label for="productCategory">Category*</label>
-                                        <input type="password" class="form-control" id="productCategory" name="productCategory">
+                                        <input type="text" class="form-control" id="productCategory" name="productCategory">
                                     </div>
                                     <div class="form-group">
                                         <label for="productPrice">Price *</label>
-                                        <input type="password" class="form-control" id="productPrice" name="productPrice" >
+                                        <input type="text" class="form-control" id="productPrice" name="productPrice" >
                                     </div>
                                     <div class="form-group">
                                         <label for="productDescription">Description *</label>
-                                        <input type="password" class="form-control" id="productDescription" name="productDescription" >
+                                        <input type="text" class="form-control" id="productDescription" name="productDescription" >
                                     </div>
                                     <hr>
                                     <button type="cancel" class="btn btn-danger btn-sm" id="cancel">Cancel</button>
-                                    <button type="submit" class="btn btn-success btn-sm" id="addProduct">Add</button>
+                                    <input  type="submit" class="btn btn-success btn-sm" id="addProduct" value="Add" onClick="createOrUpdateProduct()"></input>
                                 </form>
 
 

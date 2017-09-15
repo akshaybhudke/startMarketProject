@@ -80,3 +80,38 @@ text-align: center
  .productTablePanel{
  margin-left:20px;
  }
+
+ .dashboard_graph .col-md-3 {
+     padding: 16px;
+     margin: 0px 30px;
+     position: 31px 12px 33px 8px;
+ }
+
+#message{
+background-color :green;
+padding:15px;
+}
+
+.listHeading h3 {
+    margin: 2px;
+    font-weight: normal;
+}
+.dashboard_graph {
+    background: #fff;
+    padding: 7px 0px;
+    /* padding-left: 0px; */
+    margin-left: 0px;
+}
+.filterSection .glyphicon-filter:before {
+    float: left;
+    margin-right: 6px;
+    margin-top: 6px;
+}
+.filterSection.panel.panel-default > span > h2{
+float:left;margin-top:0px
+}
+.filterSection.panel.panel-default > h2{
+float: right;
+    margin-top: 3px;
+    font-size: 12px;
+}
