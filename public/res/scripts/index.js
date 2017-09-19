@@ -11,11 +11,13 @@
 
 /*Global Variables Section*/
 
+
 //Declare your Global Variables inside this block
 
 var availableProductSize;
 var generateNextId;
 var productObj =new Object();
+var editProductId;
 
 
 
@@ -26,12 +28,17 @@ var productObj =new Object();
 $(document).ready(function() {
     //Write any code you want executed in a $(document).ready() block here
     $( "#message" ).hide();
+    $("#updateOrAddMessage").hide();
+
  getProducts();
+
 
   });
 
 //Get List of Products from the database
 function getProducts() {
+$( "#message" ).empty();
+$("#updateOrAddMessage").empty();
      $.ajax({
             url: "http://localhost:3000/products",
             contentType: "application/json; charset=utf-8",
@@ -49,7 +56,7 @@ function getProducts() {
 
     Using AJAX call the webservice http://localhost:3000/products in GET method
     It will return an Array of objects as follows
-    
+
         {
             [
                 {
@@ -85,8 +92,8 @@ $(productObj).each(function (i,val){
         var id=val._id;
         category += "<div class=\"btn  btn-success btn-sm \" >"+val.category+"<\/div>";
         var strVar="";
-        strVar += " <div class=\" col-md-12 col-sm-12 col-xs-12 panel panel-default\">";
-        strVar += "                                   <div class=\" TileContainer\" id="+id+">";
+        strVar += " <div class=\" col-md-12 col-sm-12 col-xs-12 panel panel-default\" id="+id+">";
+        strVar += "                                   <div class=\" TileContainer\" >";
         strVar += "                                    <div class=\"imgContainer\">";
         strVar += "                                        <img class=\"img-rounded  img-thumbnail img-responsive\" alt=\"Responsive image\"  src=\"images\/product.png\">";
         strVar += "                                        <a href=\"#\" class=\" pull-right\"><span class=\"glyphicon glyphicon-upload\"><\/span> Upload <\/a>";
@@ -137,13 +144,7 @@ $( document.body ).click(function() {
 */
 
 
-$('html').click(function(e){
 
-  if(!$(e.target).attr("id") == "addProduct") {
-            alert(generateNextId);
-  }
-
-});
 
 /*
 
@@ -163,8 +164,45 @@ $('form').submit(function(e){
         return false;
 });
 
+
+
+$('#addProduct').click(function(e){
+                      if($(e.target).attr("value") == "Add") {
+                              $.post("http://localhost:3000/product",
+                                      {   name: $("#productName").val(),
+                                          category: $("#productCategory").val(),
+                                          description:$("#productDescription").val(),
+                                          price:$("#productPrice").val()
+                                      });
+                              getProducts();
+                              $("#updateOrAddMessage").show();
+                              $("#updateOrAddMessage").append("Product Added Successfully");
+                      }
+                                  if($(e.target).attr("value") == "Update") {
+                                    var id=editProductId;
+                                    $.ajax({
+                                             url: "http://localhost:3000/product/"+id,
+                                             type: 'PUT',
+                                             data:{
+                                                      name: $("#productName").val(),
+                                                      category: $("#productCategory").val(),
+                                                      description:$("#productDescription").val(),
+                                                      price:$("#productPrice").val()
+                                                  },
+                                             success: function(response) {
+                                                                           getProducts();
+                                                                           $( "#message" ).show();
+                                                                           $('#message').append("Added Successfully");
+                                                                         }
+                                           });
+                                  }
+
+  $("#updateOrAddMessage").slideUp(5000);
+
+
+});
 /*
- Write a generic click even capture code block 
+ Write a generic click events capture code block
  to capture the click events of all the buttons in the HTML page
 
  If the button is remove
@@ -200,18 +238,18 @@ $('form').submit(function(e){
  Show the success/failure messages in a message div with the corresponding color green/red
  Reset the form and set the mode to Add
 
- 
+
  If the button is edit
  ---------------------
  Change the Form to Edit Mode
  Populate the details of the product in the form
- 
+
  If the button is Update
  -----------------------
  Using jQuery Validate the form
  All fields are mandatory.
  Call the API
-    http://localhost:3000/product/:id    
+    http://localhost:3000/product/:id
     with method=PUT
     replace <id> with the _id in the product object
     For this call data should be in following structure
@@ -238,24 +276,32 @@ function removeProduct(id) {
 //write your code here to remove the product and call when remove button clicked
  var txt;
  if (confirm("Are you sure you want to remove this product ?") == true) {
-$.ajax({
+   $.ajax({
             url: "http://localhost:3000/product/"+id ,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             type: "DELETE",
             success: productRemovalSuccess
-    }); //window.location.reload();
+          }); //window.location.reload();
 
         function productRemovalSuccess(){
-        getProducts();
+      //  getProducts();
+        $("#"+id+"").slideUp( "slow", function() {
+         // Animation complete.
+       });
         $( "#message" ).show();
         $('#message').append("Removed Successfully");
+      //  $("#message").slideUp();
+         $("#message").fadeOut(5000);
         }
+        $("#message").empty();
+
     }
 }
 
 /*Update Product*/
 function editProduct(id) {
+  editProductId=id;
    $.ajax({
             url: "http://localhost:3000/product/"+id ,
             contentType: "application/json; charset=utf-8",
@@ -274,13 +320,22 @@ function editProduct(id) {
 function editProductResponse(response){
  productObj=response.data;
 //write your code here to update the product and call when update button clicked
-
-document.getElementById("productName").value = productObj.name;
-document.getElementById("productCategory").value = productObj.category;
-document.getElementById("productPrice").value = productObj.price;
-document.getElementById("productDescription").value = productObj.description;
-document.getElementById("addProduct").value = "Update";
+$("#productName").val(productObj.name);
+$("#productCategory").val(productObj.category);
+$("#productPrice").val(productObj.price);
+$("#productDescription").val(productObj.description);
+$("#addProduct").val("Update");
+//document.getElementById("productName").value = productObj.name;
+//document.getElementById("productCategory").value = productObj.category;
+//document.getElementById("productPrice").value = productObj.price;
+//document.getElementById("productDescription").value = productObj.description;
+//document.getElementById("addProduct").value = "Update";
 }
+
+$("#addProduct").click(function(){
+  console.log($(this).val());
+})
+
 
 function createOrUpdateProduct(){
     var button=document.getElementById("addProduct");
@@ -296,19 +351,41 @@ function createOrUpdateProduct(){
 
 function createProduct(id) {
     //write your code here to create  the product and call when add button clicked
-alert(generateNextId);
+    var name=document.getElementById("productName").value;
+    var category=document.getElementById("productCategory").value;
+    var price=document.getElementById("productPrice").value;
+    var description=document.getElementById("productDescription").value;
+$.ajax ({
+       url: "http://localhost:3000/product/",
+       contentType: "application/json; charset=utf-8",
+       dataType: "json",
+       type: "POST",
+       data: {
+               "name":name,
+               "category":category,
+               "description":description,
+               "price":price
+       },
+       success: addProductSuccess
+});
+
+function addProductSuccess() {
+
+        getProducts();
+        $( "#message" ).show();
+        $('#message').append("Added Successfully");
+ }
+
+
 
 }
-
+/*
 function updateProduct1(){
-
 id=productObj._id;
 var name=document.getElementById("productName").value;
-var category=document.getElementById("productCategory");
+var category=document.getElementById("productCategory").value;
 var price=document.getElementById("productPrice").value;
-var description=document.getElementById("productDescription");
-console.log()
-alert("i am in updateProduct");
+var description=document.getElementById("productDescription").value;
   $.ajax ({
          url: "http://localhost:3000/product/"+id ,
          contentType: "application/json; charset=utf-8",
@@ -320,10 +397,14 @@ alert("i am in updateProduct");
                  "description":description,
                  "price":price
          },
+         xhrFields: {
+      withCredentials: true
+   },
          success: editProductSuccess
   });
 
 }
+
 
 function editProductSuccess() {
 
@@ -331,8 +412,9 @@ function editProductSuccess() {
         $( "#message" ).show();
         $('#message').append("Updated Successfully");
  }
+ */
 
-/* 
+/*
     //Code Block for Drag and Drop Filter
 
     //Write your code here for making the Category List
@@ -340,8 +422,8 @@ function editProductSuccess() {
     From the products list, create a list of unique categories
     Display each category as an individual button, dynamically creating the required HTML Code
 
-    
-    //Write your code here for filtering the products list on Drop 
+
+    //Write your code here for filtering the products list on Drop
     Using jQuery
     Show the category button with a font-awesome times icon to its right in the filter list
     A category should appear only once in the filter list
@@ -362,19 +444,19 @@ $(document).ready(function() {
     $("#searchText").keyup(function() {
         /*
             //Write your code here for the Free Text Search
-            When the user types text in the search input box. 
+            When the user types text in the search input box.
             As he types the text filter the products list
             Matching the following fields
                 - Name
                 - Description
                 - Category
                 - Price
-            
+
             The search string maybe present in any one of the fields
             anywhere in the content
 
          */
-        
+
     });
 
 });
@@ -388,7 +470,7 @@ $(document).ready(function() {
     When the user clicks on the product image
     Open the file selector window
     Display the selected image as a preview in the product tile
-    
+
     //Image Upload
     When the user clicks Upload
     Using AJAX
@@ -400,6 +482,6 @@ $(document).ready(function() {
             eg:
             var formData = new FormData();
             formData.append('file', file, file.name);
-    
+
     Refresh the products list to show the new image
  */

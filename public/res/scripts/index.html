@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--Header-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Capstone | </title>
+
+    <!-- Bootstrap -->
+    <link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../libs/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../res/styles/custom.min.css" rel="stylesheet">
+    <link href="../res/styles/default.css" rel="stylesheet">
+
+
+
+</head>
+
+<!--Body-->
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <!-- navBar Start-->
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="/playGround" class="site_title">
+                        <img src="../images/cart.png" style="height: 50px; width: 55px"> Online Star
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+                <br/>
+                <!--navbar end-->
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <!--<h3>General</h3>-->
+                        <ul class="nav side-menu">
+                            <li><a href=""><i class="fa fa-cubes"></i> Manage Products <span
+                                    class="fa fa-chevron-down"></span></a>
+                            </li>
+                            <li><a><i class="fa fa-users"></i> Manage Users <span class="fa fa-chevron-down"></span></a>
+
+                            </li>
+                            <li><a><i class="fa fa-credit-card"></i> Manage Payments <span
+                                    class="fa fa-chevron-down"></span></a>
+
+                            </li>
+                            <li><a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+
+                                </ul>
+                            </li>
+                            <li><a><i class="fa fa-shopping-cart"></i> Manage Orders <span
+                                    class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+                <!--Side Bar end-->
+            </div>
+        </div>
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav>
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col row" role="main">
+
+            <!-- Search Box-->
+            <div class="input-group">
+                <input type="text" id="searchText" class="form-control" placeholder="Search for..."
+                       ondragover="allowDrop(event)" ondrop="drop(event)">
+                <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" onClick="shoWData()"><i
+                              class="fa fa-search"></i></button>
+                    </span>
+            </div>
+            <!-- Search box end-->
+
+            <!-- Category Filter Section -->
+            <!--Write your html contents here to Drop Categories-->
+            <div class=" col-md-12 col-sm-12 col-xs-12  filterSection panel panel-default ">
+                <span class="glyphicon glyphicon-filter"> <h2 align="left"> Category Filter </h2>
+                <h2 align="right" >Drag and Drop some categories into this card to filter products</h2></span>
+
+
+            </div>
+            <!-- Category Filter Section End-->
+
+            <!--Show All Categories -->
+
+            <!--Write your html contents here to Drop Categories-->
+            <div class="categories panel panel-default col-md-12 col-sm-12 col-xs-12">
+                <div class="category col-md-12 col-sm-12 col-xs-12"><Strong>All Categories</Strong>
+                    <br>
+                </div>
+            </div>
+
+
+            <!--Show All Categories End -->
+
+            <!-- Creating table for listing product info -->
+
+
+            <!-- Creating table for listing product info -->
+
+            <!--Shows All Product -->
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="dashboard_graph">
+
+                        <div class="row x_title">
+                            <div class=" listHeading col-md-12 col-sm-12 col-xs-12 ">
+                                <h3>Product List
+                                    <small></small>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div class="container rounded">
+                            <div id="message" class=" message row panel panel-default">
+                                <span class="printMessage"> </span>
+                            </div>
+                            <!--
+                                 Write your html code here to display the products
+                                 Create only the containers and fill them using jquery
+                                 corresponding jquery function to use getProducts()
+
+                                 Split the display area into 2 columns
+                                 first column should be 80%
+                                 second column should 20%
+
+                                 Display the products as a list in the first column
+                                 Use the second column for the add/edit form.
+                                 Form should contain name, category, description, price fields as shown in screen shot.
+                                 Use a single form for both Add and Edit
+
+                                 Make sure under the title of the two columns there is a div for showing messages
+                                 Show the messsage in the correct div based on the button which is clicked
+                            -->
+                            <!--Custome code Start -->
+                            <div class="products col-md-8 col-sm-8 col-xs-8  panel panel-default ">      </div>
+
+                            <div id="productTablePanel" class="col-md-3 col-sm-3 col-xs-3  panel panel-default">
+                                <strong> Add Product </strong>
+                                <hr>
+                                <div id="updateOrAddMessage" class=" message row panel panel-default">
+                                    <span class="printMessage"> </span>
+                                </div>
+                                <form  class="productForm" id="productForm" name="productForm">
+                                    <div class="row">
+                                        Name *     <input type="text" class="form-control" id="productName" name="productName" placeholder=""/>
+                                    </div>
+                                    <div class="row">
+                                        Category*   <input type="text" class="form-control" id="productCategory" name="productCategory"/>
+                                    </div>
+                                    <div class="row">
+                                        Price *    <input type="text" class="form-control" id="productPrice" name="productPrice" />
+                                    </div>
+                                    <div class="row">
+                                        Description *   <input type="text" class="form-control" id="productDescription" name="productDescription" />
+                                    </div>
+                                    <hr>
+                                    <input type="button" class="btn btn-danger btn-sm" id="cancel" value="Cancel"/>
+                                    <input  type="button" class="btn btn-success btn-sm" id="addProduct" value="Add" onClick="createOrUpdateProduct()"/>
+                                </form>
+                            </div>                      
+
+
+                            <!--Custome code End-->
+
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End of all Products -->
+
+            <br/>
+
+        </div>
+        <!-- /page content -->
+
+        <footer>
+            <div class="pull-right">
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<script src="../libs/jquery/dist/jquery.min.js"></script>
+<script src="../libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../res/js/custom.js"></script>
+<script src="../res/scripts/index.js"></script>
+
+
+<script>
+var gttl=0;
+var qty =0;
+var amount =0;
+var naam='';
+var recentAdded = '';
+//var desc=$('#imhp').attr('name');
+function addtoCart(id){
+{
+if(id=='imhp'){
+amount = amount+10;
+naam='HP';
+}
+else if(id=='imdell'){
+amount = amount+20;
+naam='Dell';
+}
+else if(id=='imsony'){
+amount = amount+30;
+naam='Sony';
+}
+
+}
+
+qty=qty+1;
+
+var ele= $("#cartt");
+gttl = parseInt($("#gttlsum").html());
+var isContains = $('#tbl').text().indexOf(naam) > -1;
+if(!isContains)
+{
+ele.append('<tr id="'+naam+'"><td>'+naam+'</td><td id="qty'+naam+'">'+qty+'</td><td id="amount'+naam+'">'+amount+'</td></tr>');
+gttl = gttl +amount;
+}
+else
+{
+var tqid = '#qty'+naam;
+var taid = '#amount'+naam;
+var q = $(tqid).html();
+var a = $(taid).html();
+gttl = gttl +amount;
+amount = amount + parseInt(a);
+qty = qty + parseInt(q);
+var tid = '#'+naam;
+var ele= $(tid);
+if(ele.html()!='')
+{
+ele.html('');
+ele.append('<td>'+naam+'</td><td id="qty'+naam+'">'+qty+'</td><td id="amount'+naam+'">'+amount+'</td>');
+}
+else
+{
+ele.append('<tr id="'+naam+'"><td>'+naam+'</td><td id="qty'+naam+'">'+qty+'</td><td id="amount'+naam+'">'+amount+'</td></tr>');
+}
+}
+$("#gttlsum").html(gttl);
+<!-- $('h1').text('NEW...');  -->
+naam='';
+qty=0;
+amount=0;
+}
+
+
+</script>
+
+
+</body>
+</html>
